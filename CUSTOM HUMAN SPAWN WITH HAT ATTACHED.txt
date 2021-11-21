@@ -1,0 +1,56 @@
+//NOTE: READ BOTTOM FOR THIS TO ACTUALLY WORK
+            ModAPI.Register(
+    new Modification()
+    {
+        OriginalItem = ModAPI.FindSpawnable("Human"),
+        NameOverride = "NAME OF HUMAN/ANDROID",
+        DescriptionOverride = "PUT DESCRIPTION HERE",
+        NameToOrderByOverride = "A",
+        CategoryOverride = ModAPI.FindCategory("PUT CATEGORY HERE"),
+        ThumbnailOverride = ModAPI.LoadSprite("THUMNAIL HERE.png"),
+        AfterSpawn = (Instance) =>
+        {
+            var skin = ModAPI.LoadTexture("SPRITE HERE.png");
+            var flesh = ModAPI.LoadTexture("defaultflesh.png");
+            var bone = ModAPI.LoadTexture("defaultbone.png");
+            var person = Instance.GetComponent<PersonBehaviour>();
+            person.SetBodyTextures(skin, flesh, bone, 1);
+            person.SetBruiseColor(86, 62, 130);
+            person.SetSecondBruiseColor(154, 0, 7);
+            person.SetThirdBruiseColor(207, 206, 120);
+            person.SetRottenColour(202, 199, 104);
+            person.SetBloodColour(108, 0, 4);
+            foreach (LimbBehaviour limb in person.Limbs)
+            {
+                limb.Health *= 7f;
+                if (limb.name == "LowerArm" || limb.name == "LowerArmFront")
+                {
+                    limb.gameObject.AddComponent<HatBehaviour>();
+                };
+            };
+            //var larm = person.transform.Find("LowerArm");
+            //larm.gameObject.AddComponent<HatBehaviour>();
+            //var rarm = person.transform.Find("LowerArmFront");
+            //rarm.gameObject.AddComponent<HatBehaviour>();
+            //
+
+            var head = Instance.transform.GetChild(5);
+            var cObj = new GameObject("Rod");
+            cObj.transform.SetParent(head);
+            cObj.transform.localPosition = new Vector3(0.0f, 0f);
+            cObj.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            cObj.transform.localScale = new Vector3(1f, 1f);
+            var cSpr = cObj.AddComponent<SpriteRenderer>();
+            cSpr.sprite = ModAPI.LoadSprite("HAT HERE.png");
+            cSpr.sortingLayerName = "Top";
+        }
+    }
+);
+
+
+------------------------------------------------
+This is not code, dont copy this lol.
+You must download this and put it in your mod for
+the code to work. Once again, you dont need to edit it, just
+dont change the name. And make sure to add it to your MOD Api
+https://cdn.discordapp.com/attachments/882676472672817182/912009956805443694/HatBehaviour.cs

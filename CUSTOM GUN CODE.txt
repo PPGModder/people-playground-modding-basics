@@ -1,0 +1,44 @@
+//NOTE: Make sure if you're audio is an mp3 or a wav file, if its an mp3 then change GUN SHOT 1-3.wav to GUN SHOT 1-3.mp3
+//NOTE AGAIN: Where it says Assault Rifle, if you want a pistol, change the Assault Rifle to Pistol
+            ModAPI.Register(
+    new Modification()
+    {
+        OriginalItem = ModAPI.FindSpawnable("Assault Rifle"), //item to derive from
+        NameOverride = "NAME OF YOUR GUN", //new item name with a suffix to assure it is globally unique
+        DescriptionOverride = "PUT DESCRIPTION HERE", //new item description
+        CategoryOverride = ModAPI.FindCategory("PUT CATEGORY HERE"), //new item category
+        ThumbnailOverride = ModAPI.LoadSprite("THUMBNAIL HERE.png"), //new item thumbnail (relative path)
+        AfterSpawn = (Instance) => //all code in the AfterSpawn delegate will be executed when the item is spawned
+        {
+            //setting the sprite
+            Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("SPRITE HERE.png");
+
+            //getting the FirearmBehaviour for later manipulation
+            var firearm = Instance.GetComponent<FirearmBehaviour>();
+
+            //creating a custom cartridge for the gun
+            Cartridge customCartridge = ModAPI.FindCartridge("9mm"); //load a copy of the 9mm cartridge
+            customCartridge.name = "7.63×25mm Mauser"; //set a name
+            customCartridge.Damage *= 0.8f; //change the damage however you like
+            customCartridge.StartSpeed *= 1.5f; //change the bullet velocity
+            customCartridge.PenetrationRandomAngleMultiplier *= 0.5f; //change the accuracy when the bullet travels through an object
+            customCartridge.Recoil *= 0.7f; //change the recoil
+            customCartridge.ImpactForce *= 0.7f; //change how much the bullet pushes the target
+
+            //set the cartridge to the FirearmBehaviour
+            firearm.Cartridge = customCartridge;
+
+            //set the new gun sounds. this is an array of AudioClips that is picked from at random when shot
+            firearm.ShotSounds = new AudioClip[]
+            {
+                ModAPI.LoadSound("GUN SHOT 1.wav"),
+                ModAPI.LoadSound("GUN SHOT 2.wav"),
+                ModAPI.LoadSound("GUN SHOT 3.wav"),
+            };
+
+            // set the collision box to the new sprite shape
+            // this is the easiest way to fix your collision shape, but it also the slowest.
+            Instance.FixColliders();
+        }
+    }
+);

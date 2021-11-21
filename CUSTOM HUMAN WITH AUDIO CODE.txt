@@ -1,0 +1,29 @@
+//NOTE: Make sure your audio is an mp3 of wav, if its a wav change the CUSTOM AUDIO HERE.mp3 to CUSTOM AUDIO HERE.wav
+            ModAPI.Register(
+                    new Modification()
+                    {
+                        OriginalItem = ModAPI.FindSpawnable("Human"),
+                        NameOverride = "NAME OF YOUR HUMAN/ANDROID",
+                        NameToOrderByOverride = "A",
+                        DescriptionOverride = "PUT DESCRIPTION HERE",
+                        CategoryOverride = ModAPI.FindCategory("PUT CATEGORY HERE"),
+                        ThumbnailOverride = ModAPI.LoadSprite("THUMBNAIL HERE.png"),
+                        AfterSpawn = (Instance) =>
+                        {
+                            var person = Instance.GetComponent<PersonBehaviour>();
+
+                            var skin = ModAPI.LoadTexture("SPRITE HERE.png");
+                            person.SetBodyTextures(skin, null, null, 1);
+
+                            AudioSource audioSource;
+                            AudioClip sound;
+                            sound = ModAPI.LoadSound("CUSTOM AUDIO HERE.mp3");
+                            audioSource = Instance.AddComponent<AudioSource>();
+                            audioSource.minDistance = 20;
+                            audioSource.maxDistance = 100;
+                            audioSource.clip = sound;
+                            audioSource.Play();
+
+                        }
+                    }
+                );

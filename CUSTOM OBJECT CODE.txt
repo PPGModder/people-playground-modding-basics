@@ -1,0 +1,16 @@
+//Change the object to what ever you wanted it to originaly be where it says barrel
+            ModAPI.Register(
+                new Modification()
+                {
+                    OriginalItem = ModAPI.FindSpawnable("Plastic Barrel"), //item to derive from
+                    NameOverride = "NAME OF YOUR object", //new item name with a suffix to assure it is globally unique
+                    DescriptionOverride = "THUMBNAIL HERE", //new item description
+                    CategoryOverride = ModAPI.FindCategory("PUT CATEGORY HERE"), //new item category
+                    ThumbnailOverride = ModAPI.LoadSprite("THUMBNAIL HERE.png"), //new item thumbnail (relative path)
+                    AfterSpawn = (Instance) => //all code in the AfterSpawn delegate will be executed when the item is spawned
+                    {
+                        //get the SpriteRenderer and replace its sprite with a custom one
+                        Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("SPRITE HERE.png");
+                    }
+                }
+            );

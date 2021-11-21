@@ -1,0 +1,49 @@
+//NOTE: Make sure if you're audio is an mp3 or a wav file, if its an mp3 then change CUSTOM AUDIO HERE.wav to CUSTOM AUDIO HERE.mp3
+            ModAPI.Register(
+                new Modification()
+                {
+                    OriginalItem = ModAPI.FindSpawnable("Small I-Beam"),
+                    NameOverride = "NAME OF YOUR SIREN",
+                    NameToOrderByOverride = "A",
+                    CategoryOverride = ModAPI.FindCategory("PUT CATEGORY HERE"), //new item category
+                    DescriptionOverride = "PUT DESCRIPTION HERE",
+                    ThumbnailOverride = ModAPI.LoadSprite("THUMBNAIL HERE.png", 5f),
+                    AfterSpawn = (Instance) =>
+                    {
+
+                        Instance.GetComponent<SpriteRenderer>().sprite = ModAPI.LoadSprite("SPRITE HERE.png", 1f);
+                        Instance.FixColliders();
+
+
+                        AudioSource AS = Instance.AddComponent<AudioSource>();
+                        AS.minDistance = 1;
+                        AS.maxDistance = 100;
+
+
+
+
+                        int index = 0;
+                        AudioClip[] AudioData = new AudioClip[]
+                        {
+                            ModAPI.LoadSound("CUSTOM AUDIO HERE.wav"),
+                            ModAPI.LoadSound("CUSTOM AUDIO HERE.wav")
+                        };
+
+
+                        Instance.FixColliders();
+
+                        Instance.AddComponent<UseEventTrigger>().Action = () =>
+                        {
+                            AS.clip = AudioData[index];
+                            AS.Play();
+
+                            index++;
+                            if (index == AudioData.Length) index = 0;
+                        };
+
+                        SirenBehaviour sirenBehaviour = Instance.GetComponent<SirenBehaviour>();
+                        sirenBehaviour.enabled = false;
+
+                    }
+                }
+            );

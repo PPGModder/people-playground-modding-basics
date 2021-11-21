@@ -1,0 +1,27 @@
+//NOTE: Go to the top of your script, and paste the categorybuilder code under public static void, here is an example:
+
+------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEngine.Events;
+
+namespace Mod
+{
+    public class Mod
+    {
+        public static void Main()
+        {
+
+            CategoryBuilder.Create("CUSTOM NAME HERE", "PUT DESCRIPTION HERE", ModAPI.LoadSprite("THUMBNAIL HERE.png"));
+------------------------------
+
+Once you have put that piece of code there, download this file, and put it inside of your mod, you dont
+need to edit the file but dont chage the name.
+
+https://cdn.discordapp.com/attachments/882676472672817182/912007900963143750/CategoryBuilder.cs
+
+(It's a simple text file)
+Also make sure you add the code to your MOD script.
